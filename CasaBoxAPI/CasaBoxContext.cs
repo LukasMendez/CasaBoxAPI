@@ -13,22 +13,34 @@ namespace CasaBoxAPI
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CasaBoxType>(e =>
+            {
+                e.HasKey(ct => ct.Type);
+            });
+
+            modelBuilder.Entity<CasaBoxVariant>(e =>
+            {
+                e.HasKey(cv => new { cv.M2, cv.M3, cv.Type });
+                e.Property(cv => cv.Pris)
+                    .IsRequired();
+                e.HasOne<CasaBoxType>(cv => cv.CasaBoxType)
+                    .WithMany(ct => ct.CasaBoxVarianter)
+                    .HasForeignKey(cv => cv.Type);
+                 
+            });
+
+
+
             modelBuilder.Entity<CasaBox>(e =>
             {
                 e.HasKey(c => c.BoxNummer);
+                e.Property(c => c.BoxNummer)
+                    .ValueGeneratedNever();
                 e.Property(c => c.Ledig)
                     .IsRequired();
-                e.Property(c => c.M2)
-                    .IsRequired();
-                e.Property(c => c.M3)
-                    .IsRequired();
-                e.Property(c => c.Pris)
-                    .IsRequired();
-                e.Property(c => c.Type)
-                    .HasConversion(
-                        type => type.ToString(),
-                        type => (CasaBoxType)Enum.Parse(typeof(CasaBoxType), type)
-                        )
+                e.HasOne<CasaBoxVariant>(c => c.CasaBoxVariant)
+                    .WithMany(cv => cv.CasaBoxes)
+                    .HasForeignKey(c => new { c.M2, c.M3, c.Type })
                     .IsRequired();
             });
 
@@ -64,6 +76,19 @@ namespace CasaBoxAPI
                     .HasForeignKey(b => b.Mailadresse)
                     .IsRequired();
                     
+            });
+
+            modelBuilder.Entity<BookingHistorik>(e =>
+            {
+                e.HasKey(bh => bh.BookingId);
+                e.Property(bh => bh.Mailadresse)
+                    .IsRequired();
+                e.Property(bh => bh.Bestillingstidspunkt)
+                    .IsRequired();
+                e.HasOne<CasaBox>(bh => bh.CasaBox)
+                    .WithMany(c => c.BookingHistorik)
+                    .HasForeignKey(bh => bh.BoxNummer)
+                    .IsRequired();
             });
         }
     }
