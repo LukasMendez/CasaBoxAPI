@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CasaBoxAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -91,5 +91,9 @@ namespace CasaBoxAPI
                     .IsRequired();
             });
         }
+
+        public DbSet<CasaBoxAPI.Models.CasaBoxType> CasaBoxType { get; set; }
+
+        public DbSet<CasaBoxAPI.Models.CasaBoxVariant> CasaBoxVariant { get; set; }
     }
 }
