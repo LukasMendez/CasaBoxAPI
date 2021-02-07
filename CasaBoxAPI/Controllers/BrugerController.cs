@@ -71,7 +71,6 @@ namespace CasaBoxAPI.Controllers
             });
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegistrerDto model)
         {

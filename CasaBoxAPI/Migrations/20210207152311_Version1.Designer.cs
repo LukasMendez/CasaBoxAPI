@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CasaBoxAPI.Migrations
 {
     [DbContext(typeof(CasaBoxContext))]
-    [Migration("20210207150014_Version2")]
-    partial class Version2
+    [Migration("20210207152311_Version1")]
+    partial class Version1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,11 +68,14 @@ namespace CasaBoxAPI.Migrations
 
             modelBuilder.Entity("CasaBoxAPI.Models.Bruger", b =>
                 {
-                    b.Property<string>("Emailadresse")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Emailadresse")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Navn")
                         .IsRequired()
@@ -86,7 +89,7 @@ namespace CasaBoxAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.HasKey("Emailadresse");
+                    b.HasKey("Id");
 
                     b.ToTable("Brugere");
                 });

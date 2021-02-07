@@ -66,11 +66,14 @@ namespace CasaBoxAPI.Migrations
 
             modelBuilder.Entity("CasaBoxAPI.Models.Bruger", b =>
                 {
-                    b.Property<string>("Emailadresse")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Emailadresse")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Navn")
                         .IsRequired()
@@ -84,7 +87,7 @@ namespace CasaBoxAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.HasKey("Emailadresse");
+                    b.HasKey("Id");
 
                     b.ToTable("Brugere");
                 });

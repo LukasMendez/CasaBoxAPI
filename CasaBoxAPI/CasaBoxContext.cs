@@ -13,12 +13,18 @@ namespace CasaBoxAPI
 
         public DbSet<Bruger> Brugere { get; set; }
 
+        public DbSet<CasaBoxType> CasaBoxType { get; set; }
+
+        public DbSet<CasaBoxVariant> CasaBoxVariant { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<Bruger>(e =>
             {
-                e.HasKey(b => b.Emailadresse);
+                e.HasKey(b => b.Id);
+                e.Property(b => b.Emailadresse)
+                    .IsRequired();
                 e.Property(b => b.Navn)
                     .IsRequired();
                 e.Property(b => b.PasswordHash)
@@ -107,8 +113,6 @@ namespace CasaBoxAPI
             });
         }
 
-        public DbSet<CasaBoxAPI.Models.CasaBoxType> CasaBoxType { get; set; }
 
-        public DbSet<CasaBoxAPI.Models.CasaBoxVariant> CasaBoxVariant { get; set; }
     }
 }

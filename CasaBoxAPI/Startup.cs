@@ -85,8 +85,7 @@ namespace CasaBoxAPI
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true
+                    ValidateAudience = false
                 };
             });
 
@@ -106,6 +105,8 @@ namespace CasaBoxAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
