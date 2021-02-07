@@ -1,18 +1,12 @@
 ﻿using System;
-namespace CasaBoxAPI.Models
+namespace CasaBoxAPI.Dto
 {
-    public class Bruger
+    public class BrugerDto
     {
-
         public int Id { get; set; }
 
         public string Navn { get; set; }
 
         public string Emailadresse { get; set; }
-
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
-
     }
 }

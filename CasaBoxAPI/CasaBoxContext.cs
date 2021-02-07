@@ -11,8 +11,23 @@ namespace CasaBoxAPI
 
         public DbSet<CasaBox> CasaBoxes { get; set; }
 
+        public DbSet<Bruger> Brugere { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Bruger>(e =>
+            {
+                e.HasKey(b => b.Emailadresse);
+                e.Property(b => b.Navn)
+                    .IsRequired();
+                e.Property(b => b.PasswordHash)
+                    .IsRequired();
+                e.Property(b => b.PasswordSalt)
+                    .IsRequired();
+            });
+
+
             modelBuilder.Entity<CasaBoxType>(e =>
             {
                 e.HasKey(ct => ct.Type);
